@@ -1,0 +1,17 @@
+###this file is a personal reminder for what to do before starting the server###
+have node installed on the computer
+start node package manager
+get nodemon
+get express
+get bodyParser
+get ejs
+get mongodb
+create the aliases for stating mongo db
+create the instance of the database
+start the database using the mongo command
+get mongoose
+get express session
+get passport
+get passportLocalMongoose
+get passport-google-oauth20
+get findOrCreate
