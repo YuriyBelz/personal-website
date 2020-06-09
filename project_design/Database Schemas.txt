@@ -1,0 +1,43 @@
+﻿User profile schema{
+Id : String,
+Email : String,
+PasswordHash : String,
+Salt : String,
+AccountCreatedDate : String,
+Admin : Boolean,
+UserBlisted : Boolean,
+Strikes : Int,
+Submissions : String array, // holding the ids of their posts
+Comments : String array, // holding the ids of comments belonging to them
+}
+
+
+User profile notes : 
+* admin boolean - only used for checking for if a user is allowed to post new submissions to the site, I plan on being the only one to have permissions to the website so my account will be the only one that will have the admin boolean as true
+* Strikes - this will work with the comment BListed and UserBListed variables, at some point down the line comments will have validation for if the detect bad language or code  injections, if they do then this value will increment
+* UserBListed - this value will initially be false but when their strikes value reaches a certain amount for trying to comment something harmful then it will be switched to true, in that case I will have it so that either every comment made by the user will be hidden from everyone else regardless of if that individual comment passes validation or not. Using this method will mean that this person can see their own comment submissions appear but no one else will see them. Alternatively I can just have a check on the submissions page for if a user is BListed or not and just not give them the opportunity to post new comments by hiding the buttons allowing it but with the design of the site it would remove the purpose of having an account at all
+
+
+Submissions schema{
+SubmissionID : String,
+SubmissionTitle : String, 
+SubmissionDescription: String,
+SubmissionOwner : String,
+SubmissionComments : String array,
+SubmissionCreationDate : String,
+SubmissionTags : String,
+CommentsArray : Comment object array{
+CommentOwner : String,
+CommentCreationDate&Time: String,
+CommentContent : String,
+CommentBListed : Boolean
+}
+}
+Submission notes : 
+*  The title, description, SubmissionOwner, and creationdate should be used on the all submissions page to display all of the posts to give general information without showing the images, i might make it so that either it only displays the first few lines of the description or none of it to keep appearances. The individual submission page should show all of the information information relating to the post
+* The images for the submissions won't be stores in the database as supposedly that is inefficient, they will be saved to a new folder with the identifies of the submission they belong to, when it is time to retrieve them the server should look in the file bearing the submissions name and add all of the images found to the bootstrap gallery. 
+* Tags - this might be for a future search or filtering feature on the page holding all of the posts, I could use it to differentiate the types of posts if one is about the structure of the website or just about pictures I took on a trip somewhere.
+
+
+Comments notes : 
+* BListed - this variable should be dependant on if the submission passes validation or not, if it does then the value should be false and everyone will be able to see it, if it does not the value will be true and it will still be stored

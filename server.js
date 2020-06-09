@@ -8,6 +8,7 @@ const passport = require('passport');
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+const fs = require('fs');
 
 const app = express();
 
@@ -54,6 +55,8 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+/////////////////////////////////////////// GET Requests//////////////////////////////////
+
 app.get('/', function(req,res){
   res.render('index')
 });
@@ -70,7 +73,32 @@ app.get('/submissions', function(req,res){
   res.render('submissions');
 });
 
+app.get('/submitnew', function(req,res){
+  res.render('submitnew');
+});
 
+app.post('/submitnew', function(req,res){
+  /*this funciton will process incoming information for new posts, I should be
+  only one that is the admin and and the only one that can ever see the new submission
+  tab, on the new submission page it should have a form for the information of a New
+  image, this would include images, the post title and the post description.
+  when the information gets sent to the server it will check if the images are valid,
+  if they are thew we will make a new post object in the database and a new folder
+  in the file system with the id of the post and store the images there. When it
+  is time to serve up the images it will look for the folder with name of the
+  submission and show each image in the folder in a bootstrap carousel along
+  with the text of the submission which will be stored in the database
+
+  I researched how to store images from user submissions and stack overflow
+  says that it is more efficient to use the filesystem as it is meant to operate with filesystem
+  and how using a database like mongodb would create a bottleneck and have problems
+  with files greater than 16mB*/
+
+});
+
+
+
+/////////////////////////////////////////// POST Requests//////////////////////////////////
 
 app.listen(3000, function(){
   console.log('Cusrrently listening @ 3000')
