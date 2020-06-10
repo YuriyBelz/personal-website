@@ -27,8 +27,40 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.URLEncoded({extended: true}));
-mongoose.connect('mongodb://localhost:27017//') // pls put in the database name here i know i havent started it at the time of writing but it needs to be here eventually
+mongoose.connect('mongodb://localhost:27017//yuriybelzdotcom') // pls put in the database name here i know i havent started it at the time of writing but it needs to be here eventually
 
+const userSchema = new mongoose.Schema ({
+  email:          String,
+  paswordhash:    String,
+  salt:           String,
+  accountcreated: {type: Date, default: Date.now },
+  admin:          {type: Boolean, default: false},
+  userBlisted:    {type: Boolean, default: false},
+  strikes:        {type: Number, default: 0},
+  submissions:    Array,
+  comments:       Array
+});
+
+const submissionSchema = new mongoose.Schema ({
+  title:          String,
+  description:    String,
+  owner:          String,
+  tags:           Array,
+  submitcreated:  {type: Date, default: Date.now },
+  comments:       Array
+});
+
+const commentSchema = new mongoose.Schema ({
+  owner:           String,
+  commentcreated:  {type: Date, default: Date.now },
+  content:         String,
+  blisted:         Boolean
+})
+
+userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
+
+const User = new mongoose.model("User", userSchema);
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -69,13 +101,28 @@ app.get('/register', function(req,res){
   res.render('register');
 });
 
-app.get('/submissions', function(req,res){
-  res.render('submissions');
+app.get('/submissions' , function(req, res){
+    Submission.find(function(err, foundSubmissions){
+      if(err){
+        console.log(err);
+      }
+      else{
+        if (foundSubmissions){
+          res.render('submissions', {allSubmissions: foundSubmissions});
+        }
+      }
+    });
 });
 
 app.get('/submitnew', function(req,res){
   res.render('submitnew');
 });
+
+app.get('/submission', function(req, res){
+  const URLsubmissionID = urlParams.get('ID');
+
+});
+///
 
 app.post('/submitnew', function(req,res){
   /*this funciton will process incoming information for new posts, I should be
@@ -94,8 +141,23 @@ app.post('/submitnew', function(req,res){
   and how using a database like mongodb would create a bottleneck and have problems
   with files greater than 16mB*/
 
+  res.render('/submissions');
+
 });
 
+app.post('/submission', function(req, res){
+
+
+  res.redirect(req.get('referer'));
+});
+
+app.post('/register', function(req, res){
+
+});
+
+app.post('/login', function(req, res){
+
+});
 
 
 /////////////////////////////////////////// POST Requests//////////////////////////////////
