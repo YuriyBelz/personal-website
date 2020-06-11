@@ -1,0 +1,38 @@
+<% include('partials/headerpartial')%>
+
+<div class="clearing"></div>
+<div class="border-bottom"></div>
+<div class="logo-wrapper">
+  <div class="leftshadow"><img src="images/logo-wrap-left.jpg" /></div>
+  <div class="logo">
+    <h1>yuriybelz.com</h1>
+  </div>
+  <div class="rightshadow"><img src="images/logo-wrap-right.jpg" /></div>
+</div>
+<div class="clearing"></div>
+<!--- banner wrapper div end -->
+<div class="container">
+  <div class="panel-wrapper">
+    <div>
+      <div class="mid-panel-content">
+        <div class="border"></div>
+        <h2>Create a new account</h2>
+        <form action="/register" method="POST">
+          <div class="contact-form margin-top">
+            <label> <span>Email</span>
+            <input type="text" class="input_text" name="email" id="email"/>
+            </label>
+            <label> <span>Password</span>
+            <input type="text" class="input_text" name="password" id="password"/>
+            <button type="submit" class="button-link">Submit</button>
+            </label>
+          </div>
+        </form>
+        <div class="clearing"></div>
+      </div>
+    </div>
+    <div class="clearing"></div>
+  </div>
+</div>
+
+<% include('partials/footerpartial')%>

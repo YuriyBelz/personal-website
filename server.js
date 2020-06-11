@@ -16,21 +16,24 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.use(session({
-  secret: "Our little secret.",
+  secret: process.env.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
 
-
+/////////////////////////////////////////// //////////////////////////////////
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.URLEncoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect('mongodb://localhost:27017//yuriybelzdotcom') // pls put in the database name here i know i havent started it at the time of writing but it needs to be here eventually
+
+/////////////////////////////////////////// Schemas //////////////////////////////////
 
 const userSchema = new mongoose.Schema ({
   email:          String,
+  googleId:       String,
   paswordhash:    String,
   salt:           String,
   accountcreated: {type: Date, default: Date.now },
@@ -61,6 +64,10 @@ userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
+const Submit = new mongoose.model("Submit", submissionSchema);
+const Comment = new mongoose.model("Comment", commentSchema);
+
+passport.use(User.createStrategy());
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -112,14 +119,15 @@ app.get('/submissions' , function(req, res){
         }
       }
     });
-});
+});//this page features all blog articles/ submissions by me, clicking on one
+  // should bring you to a page with the full content of an individual article
 
 app.get('/submitnew', function(req,res){
   res.render('submitnew');
 });
 
 app.get('/submission', function(req, res){
-  const URLsubmissionID = urlParams.get('ID');
+
 
 });
 ///
@@ -152,10 +160,35 @@ app.post('/submission', function(req, res){
 });
 
 app.post('/register', function(req, res){
-
+  User.register({username: req.body.email}, req.body.password, function(err, user){
+  if (err) {
+    console.log(err);
+    res.redirect("/register");
+  } else {
+    passport.authenticate("local")(req, res, function(){
+      res.redirect("/");
+    });
+  }
+});
 });
 
 app.post('/login', function(req, res){
+
+  const user = new User({//temp user object is necessary
+  email: req.body.email,
+  password: req.body.password
+});
+
+req.login(user, function(err){
+  if (err) {
+    console.log(err);
+    res.redirect("/login");
+  } else {
+    passport.authenticate("local")(req, res, function(){
+      res.redirect("/");
+    });
+  }
+});
 
 });
 

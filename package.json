@@ -18,7 +18,9 @@
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
     "mongoose": "^5.9.17",
+    "mongoose-findorcreate": "^3.0.0",
     "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
     "popper": "^1.0.1"
