@@ -1,12 +1,11 @@
-<% include('partials/headerpartial')%>
-
+<%- include('partials/headerpartial.ejs') %>
 <!--- menu-wrapper div end -->
 <div class="clearing"></div>
 <div class="border-bottom"></div>
 <div class="logo-wrapper">
   <div class="leftshadow"><img src="images/logo-wrap-left.jpg" /></div>
   <div class="logo">
-    <h1>sitename</h1>
+    <h1>YuriyBelz.com</h1>
   </div>
   <div class="rightshadow"><img src="images/logo-wrap-right.jpg" /></div>
 </div>
@@ -17,61 +16,34 @@
     <div class="left-colum">
       <div class="panel">
         <div class="title">
-          <h1>Atvero eos et accusa</h1>
-          <h2>Unde omnis iste natus error sit volup
-            tatem </h2>
+          <h1>All Submissions, newest appear first</h1>
         </div>
         <div class="content">
-          <p>Nam libero tempore, cum soluta nobis impedit quo minus id quod maxime placeat facere.</p>
-          <div class="right-panel">
+          <p>click on an entry to see more information</p>
+          <div >
             <ul>
-              <li><a href="#">Maecenas a purus quis nisl interdum</a></li>
-              <li><a href="#">Cras faucibus leo sit amet quam </a></li>
-              <li><a href="#">Nullam eleifend erat faucibus </a></li>
-              <li><a href="#">Morbi sollicitudin orci vitae  no</a></li>
-              <li><a href="#">Aenean egestas quam nec orci</a></li>
-              <li><a href="#">Duis quis nisi in ante scelerisque</a></li>
-              <li class="borderNone"><a href="#">Ut a quam in lectus lacinia</a></li>
+              <%allSubmissions.forEach(function(post){%>
+                    <a href=<%="/submission/?id=" + post._id%>><div class="subSmall" id=<%=post._id%>>
+                      <>
+                      <h3 class="subSmallTitle"><%=post.title%></h3>
+                      <p class ="subsmallInfo">By: <%=post.owner%><br>
+                      <%=post.description%><br>
+                      Created: <%=post.submitcreated%></p>
+                      </div></a>
+              <% }); %>
+            </ul>
+            <ul>
+              <%#<% if( )%>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="right-colum">
-      <div class="title">
-        <h1>services</h1>
-      </div>
-      <div class="panel">
-        <div class="title padBottom">
-          <h1>Services</h1>
-          <h2>Lorem ipsum dolor sit amet consectetur adipiscing elit </h2>
-        </div>
-        <div class="clear"></div>
-        <div class="content marbottom30"> <img src="images/img-7.jpg"/>
-          <h2>Fusce eleifend sapi</h2>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.</p>
-          <p>Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin. </p>
-        </div>
-        <div class="clear"></div>
-        <div class="content marbottom30"> <img src="images/img-8.jpg"/>
-          <h2>Vivamus molestie gravida</h2>
-          <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. </p>
-          <p>Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum </p>
-        </div>
-        <div class="clear"></div>
-        <div class="content marbottom30"> <img src="images/img-9.jpg"/>
-          <h2>FCras iaculis ultricies nulla.</h2>
-          <p>Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare </p>
-          <p>nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-        </div>
-        <div class="clear"></div>
-      </div>
     </div>
     <div class="clearing"></div>
   </div>
   <!--- panel wrapper div end -->
-</div>
 <!--- container div end -->
 <div class="clearing"></div>
 
-<% include('partials/footerpartial')%>
+<%- include('partials/footerpartial.ejs') %>

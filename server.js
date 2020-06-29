@@ -9,10 +9,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 const fs = require('fs');
+const url = require('url');
+const querystring = require('querystring');
 
 const app = express();
 
 app.use(express.static('public'));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 app.use(session({
@@ -21,13 +24,13 @@ app.use(session({
   saveUninitialized: false
 }));
 
-/////////////////////////////////////////// //////////////////////////////////
+/////////////////////////////////////////// Passport & mongoDB //////////////////////////////////
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect('mongodb://localhost:27017//yuriybelzdotcom') // pls put in the database name here i know i havent started it at the time of writing but it needs to be here eventually
+mongoose.connect('mongodb://localhost:27017/yuriybelzdotcom')
 
 /////////////////////////////////////////// Schemas //////////////////////////////////
 
@@ -80,9 +83,9 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -109,12 +112,13 @@ app.get('/register', function(req,res){
 });
 
 app.get('/submissions' , function(req, res){
-    Submission.find(function(err, foundSubmissions){
+    Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
       if(err){
         console.log(err);
       }
       else{
         if (foundSubmissions){
+          //found submissions need to be sorted newest to oldest,
           res.render('submissions', {allSubmissions: foundSubmissions});
         }
       }
@@ -127,10 +131,21 @@ app.get('/submitnew', function(req,res){
 });
 
 app.get('/submission', function(req, res){
-
+const URLselectedID = req.query.id;
+submit.findById(URLselectedID, function(err, URLDocumentFound){
+    if (err){
+      console.log(err);
+    } else {
+      if (URLDocumentFound){
+        const testFolder = './image_storage/';
+        const imgNames = fs.readdirSync('./image_storage/' + URLDocumentFound.title);
+        res.render('submission', {selectedSubmission: URLDocumentFound, selectedImages: imgNames });
+      }
+    }
+})
 
 });
-///
+/////////////////////////////////////////// POST Requests//////////////////////////////////
 
 app.post('/submitnew', function(req,res){
   /*this funciton will process incoming information for new posts, I should be
@@ -147,14 +162,20 @@ app.post('/submitnew', function(req,res){
   I researched how to store images from user submissions and stack overflow
   says that it is more efficient to use the filesystem as it is meant to operate with filesystem
   and how using a database like mongodb would create a bottleneck and have problems
-  with files greater than 16mB*/
+  with files greater than 16mB
 
-  res.render('/submissions');
+  I should probably add some sort of validation here*/
+
+
+
+
+
+
+  res.render('/submissions');//when completed redirects to submissions page
 
 });
 
 app.post('/submission', function(req, res){
-
 
   res.redirect(req.get('referer'));
 });
