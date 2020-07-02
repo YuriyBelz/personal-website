@@ -18,13 +18,13 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="images/index/DSC_0680.jpg" alt="First slide">
+        <img class="d-block w-100" src="images/index-img-1.jpg" alt="First slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="images/index/DSC_0954.jpg" alt="Second slide">
+        <img class="d-block w-100" src="images/index-img-2.jpg" alt="Second slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="images/index/DSC_0774.jpg" alt="Third slide">
+        <img class="d-block w-100" src="images/index-img-3.jpg" alt="Third slide">
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
@@ -44,19 +44,38 @@
     <div class="page-wrapper">
       <div class="primary-content">
         <div class="panel">
-          <div class="title">
-            <h1>Neque porro quisquam</h1>
-            <h2>Sed ut perspiciatis unde omnis iste natus error sit voluptatem </h2>
-          </div>
           <div class="content">
-            <p>Accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veri
-              tatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores </p>
+            <p id="index-description">
+              <h4>What is this site?</h4><br>
+              <div class='index-content'>
+
+
+
+              This site is intended to serve as a full stack type project for me, a recently graduated CS student.
+              My main intention for this is to be a blog style website featuring articles about the process I had to go through to get everthing workingon here.
+              In the planning stages I was pretty ambitious, I wanted to have the site use a database to save the contents of the individual articles.
+                The site would feature a specific page for writing the contents of new article pages as opposed to manually adding the information to the Database or writing a new html page file.
+                Eventually I would want the articles to allow for an account system, with it in place my account would be the only one with privledges to make new articles and everyone else's would allow them to write comments at the bottom of article pages.
+                I even planned for the comments to have some sort of validation system where on the back end before they were written to the database they would check for things like inappropriate language or sql injections,
+                if the message didnt pass the check their account would get a strike, with enough strikes their account would no longer be allowed to post new content. To take this a step further I could even implement it so that the disallowed content is saved but only seen by the creator.
+                Throughout the process I had to learn all about the conventions of running a server, managing a database, and having everything running on a linux server. In my case I wanted to have it running on my own machine, as opposed to sending my work to some hosting service, so the site is hosted on a raspberry pi. you probably noticed how
+                slowly the site loads, one day I will move this one a newer model of the Pi or even figure out how to cluster together several because I had read about how efficientit can be as a web server in terms of cost to ouput and energy use. Another fun feature to figure out and add in the future would be to include Google adsense, the site almost seems a little empty without something filling the space.
+
+                A partial inspiration for the site is the fact that I like taking pictures of the different places that I go to and my mother has told me that I should find a place to post the pictures I take for other people to view, this would fulfill another purpose of the site
+                being a place to host the pictures I take. Ideally the submissions page would have articles exclusively featuring pictures of some place I went to during the weekend.
+
+                <br>
+                <br>
+                -Yuriy<br>
+                Wednesday July 1st 2020
+                </div>
+            </p>
           </div>
         </div>
       </div>
       <div class="sidebar">
         <div class="panel">
-          <div class="img"><img src="images/img-2.jpg" /></div>
+          <div class="img"><img src="images/index-yuriy.jpg" /></div>
         </div>
       </div>
     </div>
@@ -66,7 +85,7 @@
     <script language="JavaScript" type="text/javascript">
       $(document).ready(function() {
         $('.carousel').carousel({
-          interval: 5000
+          interval: 3500
         })
       });
     </script>

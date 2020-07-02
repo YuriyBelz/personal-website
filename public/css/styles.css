@@ -80,7 +80,7 @@ GENERAL CLASSES
 -------------------------------------------------*/
 .panel {overflow:hidden;}
 .title {}
-.content { overflow:hidden; font-size:13px;}
+.content { overflow:hidden; font-size:13px;color: #838d9d;}
 .button-link{ }
 .button-link a{font-family: "Trebuchet MS"; text-transform:uppercase; font-size:13px; text-align:center; color:#ffffff; background:#96577a; width:90px; height:30px; line-height:30px; display:block;}
 .button-link a:hover{color:#000000; background:#838d9d;}
@@ -90,6 +90,9 @@ CUSTOM CLASSES
 -------------------------------------------------*/
 
 .carousel { max-width: 1000px; margin: auto; float: none;}
+index-content {color: #838d9d;}
+p {color: #838d9d;}
+h4 {color: #838d9d;}
 
 /*-------------------------------------------------
 LAYOUT CLASSS

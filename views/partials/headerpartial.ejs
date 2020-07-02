@@ -13,9 +13,9 @@
   <div class="menu-wrapper">
     <div class="menu">
       <ul>
-        <li><a href="index.ejs" class="active">home</a></li>
-        <li><a href="submissions.ejs">Submissions</a></li>
-        <li><a href="about.ejs">About</a></li>
+        <li><a href="/" class=<%= ((activePage==="index") ? "active" : "")%> >home</a></li>
+        <li><a href="submissions" class=<%= ((activePage==="submissions") ? "active" : "")%>>Submissions</a></li>
+        <li><a href="about" class=<%= ((activePage==="about") ? "active" : "")%>>About</a></li>
       </ul>
     </div>
   </div>

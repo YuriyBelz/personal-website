@@ -100,15 +100,19 @@ passport.use(new GoogleStrategy({
 /////////////////////////////////////////// GET Requests//////////////////////////////////
 
 app.get('/', function(req,res){
-  res.render('index')
+  res.render('index', {activePage: "index"})
 });
 
 app.get('/login', function(req,res){
-  res.render('login');
+  res.render('login', {activePage: "login"});
 });
 
 app.get('/register', function(req,res){
-  res.render('register');
+  res.render('register', {activePage: "register"});
+});
+
+app.get("/about", function(req, res){
+  res.render("about", {activePage: "about"});
 });
 
 app.get('/submissions' , function(req, res){
@@ -119,7 +123,7 @@ app.get('/submissions' , function(req, res){
       else{
         if (foundSubmissions){
           //found submissions need to be sorted newest to oldest,
-          res.render('submissions', {allSubmissions: foundSubmissions});
+          res.render('submissions', {allSubmissions: foundSubmissions, activePage: "submissions"});
         }
       }
     });
@@ -139,7 +143,7 @@ submit.findById(URLselectedID, function(err, URLDocumentFound){
       if (URLDocumentFound){
         const testFolder = './image_storage/';
         const imgNames = fs.readdirSync('./image_storage/' + URLDocumentFound.title);
-        res.render('submission', {selectedSubmission: URLDocumentFound, selectedImages: imgNames });
+        res.render('submission', {selectedSubmission: URLDocumentFound, selectedImages: imgNames, activePage: "submissions" });
       }
     }
 })
@@ -171,7 +175,7 @@ app.post('/submitnew', function(req,res){
 
 
 
-  res.render('/submissions');//when completed redirects to submissions page
+  res.render('/submissions', {activePage: "submissions"});//when completed redirects to submissions page
 
 });
 
@@ -187,7 +191,7 @@ app.post('/register', function(req, res){
     res.redirect("/register");
   } else {
     passport.authenticate("local")(req, res, function(){
-      res.redirect("/");
+      res.redirect("/", {activePage: "index"});
     });
   }
 });
@@ -206,7 +210,7 @@ req.login(user, function(err){
     res.redirect("/login");
   } else {
     passport.authenticate("local")(req, res, function(){
-      res.redirect("/");
+      res.redirect("/", {activePage: "index"});
     });
   }
 });
@@ -217,5 +221,5 @@ req.login(user, function(err){
 /////////////////////////////////////////// POST Requests//////////////////////////////////
 
 app.listen(3000, function(){
-  console.log('Cusrrently listening @ 3000')
+  console.log('Currently listening @ 80')
 })
