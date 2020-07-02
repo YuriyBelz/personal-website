@@ -30,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect('mongodb://localhost:27017/yuriybelzdotcom')
+mongoose.connect('mongodb://127.0.0.1:27017/yuriybelzdotcom')
 
 /////////////////////////////////////////// Schemas //////////////////////////////////
 
@@ -134,16 +134,20 @@ app.get('/submitnew', function(req,res){
   res.render('submitnew');
 });
 
-app.get('/submission', function(req, res){
-const URLselectedID = req.query.id;
-submit.findById(URLselectedID, function(err, URLDocumentFound){
+app.get('/submission/:selectedID', function(req, res){
+  /*in the all submissions page each small small descriptopn has a link to the singular submission
+  the Url will ivaluate to /submission/#### where the number is the database ID of the Document
+  once found it will be passed in and displayed
+
+  it might visually look better to have the title of the article in the URL and search the DB
+  off of that but that might be bad practice because there might be duplicates*/
+submit.findById(req.params.selectedID, function(err, foundDocument){
     if (err){
       console.log(err);
     } else {
-      if (URLDocumentFound){
-        const testFolder = './image_storage/';
-        const imgNames = fs.readdirSync('./image_storage/' + URLDocumentFound.title);
-        res.render('submission', {selectedSubmission: URLDocumentFound, selectedImages: imgNames, activePage: "submissions" });
+      if (foundDocument){
+        const imgNames = fs.readdirSync('./image_storage/' + foundDocument._id);
+        res.render('submission', {selectedSubmission: foundDocument, selectedImages: imgNames, activePage: "submissions" });
       }
     }
 })

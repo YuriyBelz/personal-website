@@ -84,7 +84,7 @@ GENERAL CLASSES
 .button-link{ }
 .button-link a{font-family: "Trebuchet MS"; text-transform:uppercase; font-size:13px; text-align:center; color:#ffffff; background:#96577a; width:90px; height:30px; line-height:30px; display:block;}
 .button-link a:hover{color:#000000; background:#838d9d;}
-.container{width:100%; overflow:hidden; background:#2c3847; padding-bottom:40px;}
+.container{width:1000px; overflow:hidden; background:#2c3847; padding-bottom:40px;}
 /*-------------------------------------------------
 CUSTOM CLASSES
 -------------------------------------------------*/
@@ -209,6 +209,6 @@ CONTACT FORM CLASSS
 /*-------------------------------------------------
 FOOTER CLASSS
 -------------------------------------------------*/
-.footer-wrapper{width:100%; background:#2c3847; overflow:hidden;}
+.footer-wrapper{margin:auto; width:1000px; background:#2c3847; overflow:hidden;}
 .footer{width:960px; margin:0 auto; margin-top:50px;}
 .footer p{ text-align:center; padding-bottom:50px;}

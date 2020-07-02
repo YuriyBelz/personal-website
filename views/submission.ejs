@@ -28,11 +28,11 @@
     <% } %>
   </ol>
   <% let isFirstImg = true;%>
-  <% selectedImages.forEach(function(imgTitle){%>
+  <% selectedImages.forEach(function(imgTitle, index){%>
   <div class="carousel-inner">
-    <div class=<%= 'carousel-item' + (isFirstImg ? ' active' : '') %>>>
+    <div class=<%= 'carousel-item' + (isFirstImg ? ' active' : '') %>>
       <% isFirstImg = false %>
-      <img class="d-block w-100" src=<%='image_storage/' + selectedSubmission._id + '/' + imgTitle%> alt=<%= 'slide number ' +  %>>
+      <img class="d-block w-100" src=<%='/image_storage/' + selectedSubmission._id + '/' + imgTitle%> alt=<%= 'slide number ' + index %>>
     </div>
 <% });%>
   </div>
@@ -59,4 +59,13 @@
   <!--- panel wrapper div end -->
 </div>
 <!--- container div end -->
+<script language="JavaScript" type="text/javascript" src="scripts/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="scripts/bootstrap.min.js"></script>
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function() {
+    $('.carousel').carousel({
+      interval: 3500
+    })
+  });
+</script>
 <%- include('partials/footerpartial.ejs') %>

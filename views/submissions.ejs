@@ -24,17 +24,13 @@
           <div >
             <ul>
               <%allSubmissions.forEach(function(post){%>
-                    <a href=<%="/submission/?id=" + post._id%>><div class="subSmall" id=<%=post._id%>>
-                      <>
-                      <h3 class="subSmallTitle"><%=post.title%></h3>
+                    <a href=<%="/submission/" + post._id%>><div class="subSmall" id=<%=post._id%>>
+                      <h3 class="subSmallTitle"><%=post.title%></h3><br><br>
                       <p class ="subsmallInfo">By: <%=post.owner%><br>
                       <%=post.description%><br>
                       Created: <%=post.submitcreated%></p>
                       </div></a>
               <% }); %>
-            </ul>
-            <ul>
-
             </ul>
           </div>
         </div>
