@@ -26,11 +26,11 @@ app.use(session({
 
 /////////////////////////////////////////// Passport & mongoDB //////////////////////////////////
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect('mongodb://127.0.0.1:27017/yuriybelzdotcom')
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /////////////////////////////////////////// Schemas //////////////////////////////////
 
@@ -85,7 +85,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/",
+    callbackURL: "http://localhost:80/auth/google/",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
