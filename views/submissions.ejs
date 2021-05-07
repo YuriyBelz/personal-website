@@ -21,8 +21,9 @@
         <div class="content">
           <p>click on an entry to see more information</p>
           <div >
-            <ul>
+            <ul><%   alert(allSubmissions.length)  %>
               <%allSubmissions.forEach(function(post){%>
+                    
                     <a href=<%="/submission/" + post._id%>><div class="subSmall" id=<%=post._id%>>
                       <h3 class="subSmallTitle"><%=post.title%></h3><br><br>
                       <p class ="subsmallInfo">By: <%=post.owner%><br>
