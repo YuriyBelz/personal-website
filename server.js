@@ -11,6 +11,7 @@ const findOrCreate = require('mongoose-findorcreate');
 const fs = require('fs');
 const url = require('url');
 const querystring = require('querystring');
+const { Console } = require('console');
 
 const app = express();
 
@@ -139,13 +140,14 @@ app.get("/about", function(req, res){
 });
 
 app.get('/submissions' , function(req, res){
-    Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
+    Submit.find( {}, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
       if(err){
         console.log(err);
       }
       else{
         if (foundSubmissions){
           //found submissions need to be sorted newest to oldest,
+          Console.log(foundSubmissions)
           res.render('submissions', {allSubmissions: foundSubmissions, activePage: "submissions"});
         }
       }
@@ -247,3 +249,4 @@ req.login(user, function(err){
 app.listen(80, function(){
   console.log('Currently listening @ 80')
 })
+
