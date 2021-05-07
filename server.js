@@ -82,7 +82,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
 console.log(process.env.GOOGLE_CLIENT_ID);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -118,7 +117,7 @@ app.get("/about", function(req, res){
 });
 
 app.get('/submissions' , function(req, res){
-    Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
+    await Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
       if(err){
         console.log(err);
       }
@@ -132,12 +131,8 @@ app.get('/submissions' , function(req, res){
 });//this page features all blog articles/ submissions by me, clicking on one
   // should bring you to a page with the full content of an individual article
 
-app.get('/submitnew', function(req,res){
-  res.render('submitnew');
-});
-
 app.get('/submission/:selectedID', function(req, res){
-  /*in the all submissions page each small small descriptopn has a link to the singular submission
+  /*in the all submissions page each small small descriptiopn has a link to the singular submission
   the Url will ivaluate to /submission/#### where the number is the database ID of the Document
   once found it will be passed in and displayed
 
@@ -158,6 +153,7 @@ submit.findById(req.params.selectedID, function(err, foundDocument){
 /////////////////////////////////////////// POST Requests//////////////////////////////////
 
 app.post('/submitnew', function(req,res){
+  res.render('submitnew');
   /*this funciton will process incoming information for new posts, I should be
   only one that is the admin and and the only one that can ever see the new submission
   tab, on the new submission page it should have a form for the information of a New
@@ -226,6 +222,16 @@ req.login(user, function(err){
 
 /////////////////////////////////////////// POST Requests//////////////////////////////////
 
-app.listen(3000, function(){
+app.listen(80, function(){
   console.log('Currently listening @ 80')
 })
+
+
+yuriybelzdotcom.submit.insertOne(
+  {title:"Working with a Database", 
+  description: "Just like almost everything in this project databases are very new to me. Building everything from the ground up definately hasn't helped. The fact that you are able to see this article on yuriybelz.com means that the database on online and working as it should, I figured out how to get MongoDB on to my raspberrypi, I found out the correct way to get it online, I found the correct way to save information onto it, and found the correct way to retrieve that information and present it to you now.",
+ owner:"Yuriy Belz", 
+ tags: [],
+  submitcreated: Date().toJSON,
+   comments: []}
+   )
