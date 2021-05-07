@@ -70,7 +70,6 @@ const User = new mongoose.model("User", userSchema);
 const Submit = new mongoose.model("Submit", submissionSchema);
 const Comment = new mongoose.model("Comment", commentSchema);
 
-if (Schema.findOne({title: "Working with a Database" }, function(err, something){}) == null){
 const firstSubmit = new Submit(
   {title: "Working with a Database", 
   description: "Just like almost everything in this project databases are very new to me. Building everything from the ground up definately hasn't helped. The fact that you are able to see this article on yuriybelz.com means that the database on online and working as it should, I figured out how to get MongoDB on to my raspberrypi, I found out the correct way to get it online, I found the correct way to save information onto it, and found the correct way to retrieve that information and present it to you now.",
@@ -79,7 +78,6 @@ const firstSubmit = new Submit(
   submitcreated: Date().toJSON,
    comments: []}
    )
-}
 
 passport.use(User.createStrategy());
 
@@ -128,7 +126,7 @@ app.get("/about", function(req, res){
 });
 
 app.get('/submissions' , function(req, res){
-    await Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
+    Submit.find( {}, null, {sort: {submitcreated: -1}} ,function(err, foundSubmissions){
       if(err){
         console.log(err);
       }
@@ -210,7 +208,7 @@ app.post('/register', function(req, res){
 });
 });
 
-app.post('/login', function(req, res){
+app.post('/login', function(req, res){ 
 
   const user = new User({//temp user object is necessary
   email: req.body.email,
