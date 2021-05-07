@@ -70,14 +70,27 @@ const User = new mongoose.model("User", userSchema);
 const Submit = new mongoose.model("Submit", submissionSchema);
 const Comment = new mongoose.model("Comment", commentSchema);
 
-const firstSubmit = new Submit(
-  {title: "Working with a Database", 
-  description: "Just like almost everything in this project databases are very new to me. Building everything from the ground up definately hasn't helped. The fact that you are able to see this article on yuriybelz.com means that the database on online and working as it should, I figured out how to get MongoDB on to my raspberrypi, I found out the correct way to get it online, I found the correct way to save information onto it, and found the correct way to retrieve that information and present it to you now.",
- owner: "Yuriy Belz", 
- tags: [],
-  submitcreated: Date().toJSON,
-   comments: []}
-   )
+
+
+Submit.find({ title: "Working with a Database"}, function (err, testsubmission){
+  if(err){
+    console.log(err);
+  }
+  else if(testsubmission == null){
+    const firstSubmit = new Submit(
+    {title: "Working with a Database", 
+    description: "Just like almost everything in this project databases are very new to me. Building everything from the ground up definately hasn't helped. The fact that you are able to see this article on yuriybelz.com means that the database on online and working as it should, I figured out how to get MongoDB on to my raspberrypi, I found out the correct way to get it online, I found the correct way to save information onto it, and found the correct way to retrieve that information and present it to you now.",
+    owner: "Yuriy Belz", 
+    tags: [],
+    submitcreated: Date().toJSON,
+    comments: []});
+
+    firstSubmit.save();
+  }
+  else if(testsubmission){
+    console.log("found the test submission")
+  }
+});
 
 passport.use(User.createStrategy());
 
@@ -234,13 +247,3 @@ req.login(user, function(err){
 app.listen(80, function(){
   console.log('Currently listening @ 80')
 })
-
-
-yuriybelzdotcom.submit.insertOne(
-  {title:"Working with a Database", 
-  description: "Just like almost everything in this project databases are very new to me. Building everything from the ground up definately hasn't helped. The fact that you are able to see this article on yuriybelz.com means that the database on online and working as it should, I figured out how to get MongoDB on to my raspberrypi, I found out the correct way to get it online, I found the correct way to save information onto it, and found the correct way to retrieve that information and present it to you now.",
- owner:"Yuriy Belz", 
- tags: [],
-  submitcreated: Date().toJSON,
-   comments: []}
-   )
