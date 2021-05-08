@@ -16,21 +16,22 @@
     <div class="left-colum">
       <div class="panel">
         <div class="title">
-          <h1>All Submissions, newest appear first</h1>
+          <h1><%=allSubmissions.length%> Submissions, newest appear first</h1>
         </div>
         <div class="content">
-          <p>click on an entry to see more information</p>
+          <p>click on an entry to see more information</p> 
+          
           <div >
-            <ul><%   alert(allSubmissions.length)  %>
-              <%allSubmissions.forEach(function(post){%>
+            <ul>
+              <% for(var i = 0; i < allSubmissions.length; i++){ %>
                     
-                    <a href=<%="/submission/" + post._id%>><div class="subSmall" id=<%=post._id%>>
-                      <h3 class="subSmallTitle"><%=post.title%></h3><br><br>
-                      <p class ="subsmallInfo">By: <%=post.owner%><br>
-                      <!--<%=post.description%><br>-->
-                      Created: <%=post.submitcreated%></p>
+                    <a href=<%="/submission/" + allSubmissions[i]._id% >><div class="subSmall" id=<%=allSubmissions[i]._id%>>
+                      <h3 class="subSmallTitle"><%=allSubmissions[i].title%></h3><br><br>
+                      <p class ="subsmallInfo">By: <%=allSubmissions[i].owner%><br>
+                      <%=allSubmissions[i].description.substring(0, 30) + ". . ."%><br>
+                      Created: <%=allSubmissions[i].submitcreated%></p>
                       </div></a>
-              <% }); %>
+              <% } %>
             </ul>
           </div>
         </div>
