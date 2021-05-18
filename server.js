@@ -90,6 +90,8 @@ Submit.find({ title: "Working with a Database"}, function (err, testsubmission){
   }
   else if(testsubmission){
     console.log("found the test submission")
+    console.log(testsubmission.title)
+    
   }
 });
 
@@ -140,13 +142,14 @@ app.get("/about", function(req, res){
 });
 
 app.get('/submissions' , function(req, res){
-    Submit.find( {}, null, null ,function(err, foundSubmissions){
+    Submit.find( {},function(err, foundSubmissions){
       if(err){
         console.log(err);
       }
       else{
         if (foundSubmissions){
           //found submissions need to be sorted newest to oldest,
+          console.log(typeof foundSubmissions)
           console.log(foundSubmissions)
           res.render('submissions', {allSubmissions: foundSubmissions, activePage: "submissions"});
         }
@@ -159,10 +162,10 @@ app.get('/submission/:selectedID', function(req, res){
   /*in the all submissions page each small small descriptiopn has a link to the singular submission
   the Url will ivaluate to /submission/#### where the number is the database ID of the Document
   once found it will be passed in and displayed
-
   it might visually look better to have the title of the article in the URL and search the DB
   off of that but that might be bad practice because there might be duplicates*/
-submit.findById(req.params.selectedID, function(err, foundDocument){
+  submit.findById(req.params.selectedID, function(err, foundDocument)
+  {
     if (err){
       console.log(err);
     } else {
@@ -171,9 +174,13 @@ submit.findById(req.params.selectedID, function(err, foundDocument){
         res.render('submission', {selectedSubmission: foundDocument, selectedImages: imgNames, activePage: "submissions" });
       }
     }
+  })
+});
+
+app.get('submitnew', function(req, res){
+  res.render('submitnew', {activePage: "submitnew"})
 })
 
-});
 /////////////////////////////////////////// POST Requests//////////////////////////////////
 
 app.post('/submitnew', function(req,res){
@@ -196,12 +203,18 @@ app.post('/submitnew', function(req,res){
 
   I should probably add some sort of validation here*/
 
+  const tempsubmit = new Submit({
+    title: req.body.title,
+    description: req.body.description,
+    owner: 'Yuriy Belz',
+    tags: [],
+    submitcreated: Date().toJSON,
+    comments: []
+  });
 
+  tempsubmit.save();
 
-
-
-
-  res.render('/submissions', {activePage: "submissions"});//when completed redirects to submissions page
+ res.render('/submissions', {activePage: "submissions"});//when completed redirects to submissions page
 
 });
 
